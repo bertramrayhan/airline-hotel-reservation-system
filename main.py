@@ -1,3 +1,6 @@
+''' The purpose of this projecct is to make a hotel class for different hotels and store a room class. can book a room and cancel it. check room, etc.
+'''
+
 class Hotel:
   def __init__(self, name, location, rating, total_rooms):
     self.name = name
