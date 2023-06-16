@@ -54,27 +54,33 @@ class Room:
 
     
 hotel1 = Hotel("Hotel 1", "Location 1", 4, 10)
-
 room1 = Room(101, "Standard", 100, True)
 room2 = Room(102, "Deluxe", 150, False)
 room3 = Room(103, "Deluxe", 150, True)
-
 hotel1.add_rooms(room1)
 hotel1.add_rooms(room2)
 hotel1.add_rooms(room3)
 
+print(hotel1)
+print("Welcome to the Hotel Reservation System!")
+
+selected_hotel = input("Enter the hotel name you want to inspect: ")
+
 while True:
-    hotel = input("What hotel do you want to inspect? ")
-    command = input("Enter a command: ")
-    
+    command = input("Enter a command (check availability, book room, cancel booking,inspect other hotel, exit): ")
+    command = command.lower().strip()
+
     if command == "check availability":
-        hotel.get_available_rooms()
+        hotel1.get_available_rooms()
     elif command == "book room":
-        try:
-          room_number = input("Which room do you want to book? ")
-        except ValueError:
-          print("Please input integer")
-        hotel.book_room(room_number)
+        room_number = int(input("Enter the room number you want to book: "))
+        print(hotel1.book_room(room_number))
+    elif command == "cancel booking":
+        room_number = int(input("Enter the room number you want to cancel the booking for: "))
+        print(hotel1.cancel_book_room(room_number))
+    elif command == "inspect other hotel":
+      change_hotel = input("Which hotel do you want to inspect? ")
+      selected_hotel = change_hotel
     elif command == "exit":
         break
     else:
