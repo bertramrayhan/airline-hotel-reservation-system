@@ -12,9 +12,9 @@ class Hotel:
   def add_rooms(self,room):
     self.rooms.append(room)
 
-  def check_room_availability(self, room_number : int):
+  def check_room_availability(self, room_number : int): #check if a room is available
     if not isinstance(room_number, int):
-      raise ValueError("This is not number")
+      raise ValueError("Room not found")
     for room in self.rooms:
       if room.number == room_number:
          if room.availability: 
@@ -22,12 +22,28 @@ class Hotel:
          else:
           return f"Room {room.number} is not available"
 
-    return f"Room not found"
+    return "Room not found"
 
-  def get_available_rooms(self):
+  def get_available_rooms(self): #check what room is available
     for room in self.rooms:
       if room.availability:
         print(f"Room {room.number} is available")
+
+  def book_room(self, room_number : int): #booking room
+    if not isinstance(room_number, int):
+      raise ValueError("Room not found")
+    for room in self.rooms:
+      if room.number == room_number:
+        room.availability = False
+    return f"Your reservation for room {room_number} is done"
+
+  def cancel_book_room(self, room_number : int):
+    if not isinstance(room_number, int):
+      raise ValueError("Room not found")
+    for room in self.rooms:
+      if room.number == room_number:
+        room.availability = True
+    return f"Your cancelation for room {room.number} is done"
 
 class Room:
   def __init__(self, number, type, price, availability):
@@ -47,9 +63,19 @@ hotel1.add_rooms(room1)
 hotel1.add_rooms(room2)
 hotel1.add_rooms(room3)
 
-print(hotel1.rooms)
-print(hotel1.check_room_availability(101))  # Output: Room 101 is available
-print(hotel1.check_room_availability(102))  # Output: Room 102 is not available
-print(hotel1.check_room_availability(103))  # Output: Room not found
-print()
-hotel1.get_available_rooms()
+while True:
+    hotel = input("What hotel do you want to inspect? ")
+    command = input("Enter a command: ")
+    
+    if command == "check availability":
+        hotel.get_available_rooms()
+    elif command == "book room":
+        try:
+          room_number = input("Which room do you want to book? ")
+        except ValueError:
+          print("Please input integer")
+        hotel.book_room(room_number)
+    elif command == "exit":
+        break
+    else:
+        print("Invalid command. Please try again.")
